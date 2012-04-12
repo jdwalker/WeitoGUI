@@ -1,9 +1,13 @@
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -11,6 +15,7 @@ import org.eclipse.swt.widgets.Shell;
 
 
 public class myWindow extends ApplicationWindow {
+	private Action newRun;
 
 	/**
 	 * Create the application window.
@@ -30,6 +35,11 @@ public class myWindow extends ApplicationWindow {
 	@Override
 	protected Control createContents(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
+		container.setLayout(new FillLayout(SWT.HORIZONTAL));
+		{
+			TextViewer textViewer = new TextViewer(container, SWT.BORDER);
+			StyledText styledText = textViewer.getTextWidget();
+		}
 
 		return container;
 	}
@@ -39,6 +49,10 @@ public class myWindow extends ApplicationWindow {
 	 */
 	private void createActions() {
 		// Create the actions
+		{
+			newRun = new Action("Create new Run") {
+			};
+		}
 	}
 
 	/**
@@ -48,6 +62,11 @@ public class myWindow extends ApplicationWindow {
 	@Override
 	protected MenuManager createMenuManager() {
 		MenuManager menuManager = new MenuManager("menu");
+		{
+			MenuManager menuManager_1 = new MenuManager("File");
+			menuManager.add(menuManager_1);
+			menuManager_1.add(newRun);
+		}
 		return menuManager;
 	}
 
@@ -58,6 +77,7 @@ public class myWindow extends ApplicationWindow {
 	@Override
 	protected ToolBarManager createToolBarManager(int style) {
 		ToolBarManager toolBarManager = new ToolBarManager(style);
+		toolBarManager.add(newRun);
 		return toolBarManager;
 	}
 
@@ -93,7 +113,7 @@ public class myWindow extends ApplicationWindow {
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("New Application");
+		newShell.setText("WeitoGUI");
 	}
 
 	/**
