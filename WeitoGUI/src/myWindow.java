@@ -12,10 +12,18 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
+
+import weito.Main;
+
+import debug.Printer;
+import debug.TextViewerPrinter;
 
 
 public class myWindow extends ApplicationWindow {
 	private Action newRun;
+	private StyledText styledText;
 
 	/**
 	 * Create the application window.
@@ -38,7 +46,8 @@ public class myWindow extends ApplicationWindow {
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 		{
 			TextViewer textViewer = new TextViewer(container, SWT.BORDER);
-			StyledText styledText = textViewer.getTextWidget();
+			textViewer.setEditable(false);
+			styledText = textViewer.getTextWidget();
 		}
 
 		return container;
@@ -50,7 +59,13 @@ public class myWindow extends ApplicationWindow {
 	private void createActions() {
 		// Create the actions
 		{
-			newRun = new Action("Create new Run") {
+			newRun = new Action("Create new Run") {
+				@Override
+				public void run() {
+					Printer.setInstance(new TextViewerPrinter(styledText));
+					Main.main(null);
+					super.run();
+				}
 			};
 		}
 	}

@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Weito"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse-java-indigo-SR1-win32/eclipse/plugins/org.eclipse.osgi_3.7.1.R37x_v20110808-1106.jar" sourcepath="C:/Program Files (x86)/eclipse-java-indigo-SR1-win32/eclipse/plugins/org.eclipse.osgi_3.7.1.R37x_v20110808-1106.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse-java-indigo-SR1-win32/eclipse/plugins/org.eclipse.core.commands_3.6.0.I20110111-0800.jar" sourcepath="C:/Program Files (x86)/eclipse-java-indigo-SR1-win32/eclipse/plugins/org.eclipse.core.commands_3.6.0.I20110111-0800.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse-java-indigo-SR1-win32/eclipse/plugins/org.eclipse.equinox.common_3.6.0.v20110523.jar" sourcepath="C:/Program Files (x86)/eclipse-java-indigo-SR1-win32/eclipse/plugins/org.eclipse.equinox.common_3.6.0.v20110523.jar"/>
@@ -17,5 +16,6 @@
 	<classpathentry kind="lib" path="C:/Program Files (x86)/eclipse-java-indigo-SR1-win32/eclipse/plugins/org.eclipse.ui.forms_3.5.100.v20110425.jar" sourcepath="C:/Program Files (x86)/eclipse-java-indigo-SR1-win32/eclipse/plugins/org.eclipse.ui.forms_3.5.100.v20110425.jar"/>
 	<classpathentry kind="lib" path="swt-grouplayout.jar" sourcepath="swt-grouplayout.zip"/>
 	<classpathentry kind="lib" path="swing2swt.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Weito"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
