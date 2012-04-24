@@ -12,11 +12,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
 
 import weito.Main;
-
 import debug.Printer;
 import debug.TextViewerPrinter;
 
@@ -42,7 +39,7 @@ public class myWindow extends ApplicationWindow {
 	 */
 	@Override
 	protected Control createContents(Composite parent) {
-		Composite container = new Composite(parent, SWT.NONE);
+		Composite container = new Composite(parent, SWT.V_SCROLL);
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 		{
 			TextViewer textViewer = new TextViewer(container, SWT.BORDER);
