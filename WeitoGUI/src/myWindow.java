@@ -19,11 +19,11 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import weito.Backend;
-import weito.Main;
+import weito.RunPapersParameter;
 import debug.Debug;
+import debug.Debug.DebugMode;
 import debug.Printer;
 import debug.TextViewerPrinter;
-import debug.Debug.DebugMode;
 import drools.AlgorithmContents;
 import drools.AlgorithmContentsFactory;
 
@@ -71,7 +71,7 @@ public class myWindow extends ApplicationWindow {
 				@Override
 				public void run() {
 					Printer.setInstance(new TextViewerPrinter(styledText));
-					//Main.main(null);
+					
 					Debug.setMode(EnumSet.of(DebugMode.FEATURE));
 					
 					List<String> paperLocs = new ArrayList<String>();
@@ -95,7 +95,7 @@ public class myWindow extends ApplicationWindow {
 							"dsdm","fdd","software","feature","driven","development","lean","empirical","study","result"} ));
 					
 					try {
-					Backend.runPapers(paperLocs, drlLocs,keywords);
+					Backend.runPapers(new RunPapersParameter(paperLocs, drlLocs, keywords));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
