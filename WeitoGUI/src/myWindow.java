@@ -70,6 +70,7 @@ public class myWindow extends ApplicationWindow {
 			newRun = new Action("Create new Run") {
 				@Override
 				public void run() {
+					styledText.setText(""); //Clear Text
 					Printer.setInstance(new TextViewerPrinter(styledText));
 					
 					Debug.setMode(EnumSet.of(DebugMode.FEATURE));
