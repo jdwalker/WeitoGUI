@@ -16,7 +16,12 @@ public class TextViewerPrinter extends Printer {
 
 	@Override
 	public void println(String string) {
-		strToPrintTo.setText( strToPrintTo.getText() + string + "\n" );
+		print(string + "\n");
+	}
+
+	@Override
+	public void print(String string) {
+		strToPrintTo.setText( strToPrintTo.getText() + string );
 	}
 	
 }
