@@ -31,6 +31,7 @@ import drools.AlgorithmContentsFactory;
 public class myWindow extends ApplicationWindow {
 	private Action newRun;
 	private StyledText styledText;
+	private Action OpenWizard;
 
 	/**
 	 * Create the application window.
@@ -103,6 +104,13 @@ public class myWindow extends ApplicationWindow {
 					super.run();
 				}
 			};
+			newRun.setAccelerator(SWT.ALT | 'C');
+		}
+		{
+			OpenWizard = new Action("Open Wizard") {
+				
+			};
+			OpenWizard.setAccelerator(SWT.ALT | 'O');
 		}
 	}
 
@@ -117,6 +125,7 @@ public class myWindow extends ApplicationWindow {
 			MenuManager menuManager_1 = new MenuManager("File");
 			menuManager.add(menuManager_1);
 			menuManager_1.add(newRun);
+			menuManager_1.add(OpenWizard);
 		}
 		return menuManager;
 	}
@@ -129,6 +138,7 @@ public class myWindow extends ApplicationWindow {
 	protected ToolBarManager createToolBarManager(int style) {
 		ToolBarManager toolBarManager = new ToolBarManager(style);
 		toolBarManager.add(newRun);
+		toolBarManager.add(OpenWizard);
 		return toolBarManager;
 	}
 
@@ -163,8 +173,9 @@ public class myWindow extends ApplicationWindow {
 	 */
 	@Override
 	protected void configureShell(Shell newShell) {
+		newShell.setImage(null);
 		super.configureShell(newShell);
-		newShell.setText("WeitoGUI");
+		newShell.setText("Weito");
 	}
 
 	/**
