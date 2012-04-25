@@ -39,12 +39,13 @@ public class myWindow extends ApplicationWindow {
 	 */
 	@Override
 	protected Control createContents(Composite parent) {
-		Composite container = new Composite(parent, SWT.V_SCROLL);
+		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 		{
-			TextViewer textViewer = new TextViewer(container, SWT.BORDER);
+			TextViewer textViewer = new TextViewer(container, SWT.V_SCROLL);
 			textViewer.setEditable(false);
 			styledText = textViewer.getTextWidget();
+			styledText.setLeftMargin(10);
 		}
 
 		return container;
