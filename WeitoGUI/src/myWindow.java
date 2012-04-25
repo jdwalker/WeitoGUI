@@ -9,6 +9,7 @@ import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.window.ApplicationWindow;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Point;
@@ -108,7 +109,11 @@ public class myWindow extends ApplicationWindow {
 		}
 		{
 			OpenWizard = new Action("Open Wizard") {
-				
+				public void run() {
+					NewRunWizard wizard = new NewRunWizard();
+					WizardDialog runDialog = new WizardDialog(getShell(), wizard);
+					runDialog.open();
+				}
 			};
 			OpenWizard.setAccelerator(SWT.ALT | 'O');
 		}

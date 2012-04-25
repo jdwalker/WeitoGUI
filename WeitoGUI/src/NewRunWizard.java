@@ -10,6 +10,7 @@ public class NewRunWizard extends Wizard {
 	@Override
 	public void addPages() {
 		addPage(new SelectFilePage());
+		addPage(new ModifyStyles());
 	}
 
 	@Override
