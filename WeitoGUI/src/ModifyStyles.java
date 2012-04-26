@@ -12,6 +12,8 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import swing2swt.layout.BorderLayout;
+import org.eclipse.wb.swt.TableViewerColumnSorter;
+import org.eclipse.jface.viewers.Viewer;
 
 
 public class ModifyStyles extends WizardPage {
@@ -52,6 +54,19 @@ public class ModifyStyles extends WizardPage {
 				}
 				{
 					TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+					new TableViewerColumnSorter(tableViewerColumn) {
+						@Override
+						protected int doCompare(Viewer viewer, Object e1, Object e2) {
+							// TODO Remove this method, if your getValue(Object) returns Comparable.
+							// Typical Comparable are String, Integer, Double, etc.
+							return super.doCompare(viewer, e1, e2);
+						}
+						@Override
+						protected Object getValue(Object o) {
+							// TODO remove this method, if your EditingSupport returns value
+							return super.getValue(o);
+						}
+					};
 					TableColumn tblclmnDrlFilesLocation = tableViewerColumn.getColumn();
 					tblclmnDrlFilesLocation.setWidth(460);
 					tblclmnDrlFilesLocation.setText("DRL file(s) location");
