@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class EditDRL extends Dialog {
 
 		protected CellEditor getCellEditor(Object element) {
 			// TODO Auto-generated method stub
-			return new DialogCellEditor() {
+			return new DialogCellEditor(viewer.getTable()) {
 				
 				@Override
 				protected Object openDialogBox(Control arg0) {
@@ -53,7 +54,7 @@ public class EditDRL extends Dialog {
 					openFilesDlg.setFilterExtensions(DRL_FILTER_EXT);
 					String fn = openFilesDlg.open();
 			        if (fn != null) {
-			          return (openFilesDlg.getFilterPath() + openFilesDlg.getFileName());			          
+			          return (openFilesDlg.getFilterPath() + File.separator + openFilesDlg.getFileName());			          
 			        } else {
 			        	return null;
 			        }
@@ -111,8 +112,8 @@ public class EditDRL extends Dialog {
 	protected static final String[] DRL_FILTER_EXT = {"*.drl"};
 	protected static final String[] EXCEL_FILTER_NAMES = {"Excel Template File (*.xls)"};
 	protected static final String[] EXCEL_FILTER_EXT = {"*.xls"};
-	protected static final String[] DRT_FILTER_EXT = {"Rule files (*.drl)","Rule Template files (*.drt)"};
-	protected static final String[] DRT_FILTER_NAMES = {".drl",".drt"};
+	protected static final String[] DRT_FILTER_EXT = {".drl",".drt"};
+	protected static final String[] DRT_FILTER_NAMES = {"Rule files (*.drl)","Rule Template files (*.drt)"};
 	private Table StyleTable;
 	private Label lblFileLocation;
 	private Label AlgorithmLocationLabel;
@@ -232,7 +233,7 @@ public class EditDRL extends Dialog {
 					openFilesDlg.setFilterExtensions(DRL_FILTER_EXT);
 					String fn = openFilesDlg.open();
 			        if (fn != null) {
-			          lblFileLocation.setText(openFilesDlg.getFileName() + openFilesDlg.getFilterPath() );			          
+			          lblFileLocation.setText(openFilesDlg.getFilterPath() + File.separator + openFilesDlg.getFileName()  );			          
 			        }
 				}
 			});
@@ -249,7 +250,7 @@ public class EditDRL extends Dialog {
 					openFilesDlg.setFilterExtensions(DRT_FILTER_EXT);
 					String fn = openFilesDlg.open();
 			        if (fn != null) {
-			          AlgorithmLocationLabel.setText(openFilesDlg.getFileName() + openFilesDlg.getFilterPath() );			          
+			          AlgorithmLocationLabel.setText(openFilesDlg.getFilterPath() + File.separator + openFilesDlg.getFileName() );			          
 			        }
 				}
 			});
@@ -288,7 +289,7 @@ public class EditDRL extends Dialog {
 					openFilesDlg.setFilterExtensions(EXCEL_FILTER_EXT);
 					String fn = openFilesDlg.open();
 			        if (fn != null) {
-			          excelFileLabel.setText(openFilesDlg.getFileName() + openFilesDlg.getFilterPath() );			          
+			          excelFileLabel.setText(openFilesDlg.getFilterPath() + File.separator + openFilesDlg.getFileName() );			          
 			        }
 				}
 			});
@@ -334,5 +335,6 @@ public class EditDRL extends Dialog {
 		if(AlgorithmLocationLabel.getText().endsWith(".drt")) {
 		StylesData.getInstance().setExcelSelection(excelFileLabel.getText());
 		}
+		StylesData.getInstance().setStyles(tableStyles);
 	}
 }
