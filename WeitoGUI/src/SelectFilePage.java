@@ -44,6 +44,8 @@ public class SelectFilePage extends WizardPage {
 	private FormData fd_composite_4;
 	private TableViewer tableViewer;
 	private ListViewer listViewer;
+	private Composite composite;
+	private ComboViewer comboViewer;
 
 	/**
 	 * Create the wizard.
@@ -74,7 +76,7 @@ public class SelectFilePage extends WizardPage {
 				composite_1.setLayoutData(fd_composite_1);
 			}
 			{
-				ComboViewer comboViewer = new ComboViewer(composite_1, SWT.NONE);
+				comboViewer = new ComboViewer(composite_1, SWT.NONE);
 				Combo combo = comboViewer.getCombo();
 				combo.setBounds(167, 2, 330, 23);
 			}
@@ -161,10 +163,10 @@ public class SelectFilePage extends WizardPage {
 			}
 		}
 		{
-			Composite composite = new Composite(container, SWT.NONE);
+			composite = new Composite(container, SWT.NONE);
 			{
 				FormData fd_composite = new FormData();
-				fd_composite.bottom = new FormAttachment(100, -10);
+				fd_composite.bottom = new FormAttachment(100, -37);
 				fd_composite.top = new FormAttachment(composite_2, 6);
 				fd_composite.right = new FormAttachment(100, -1);
 				fd_composite.left = new FormAttachment(0);
@@ -258,6 +260,25 @@ public class SelectFilePage extends WizardPage {
 					btnRemoveSelectedKeywords.setText("Remove Selected Keywords");
 				}
 			}
+		}
+		{
+			Button btnResetAllData = new Button(container, SWT.NONE);
+			btnResetAllData.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					RunPapersParameter.getInstance().clearAllTemporaries();
+					tableViewer.refresh();
+					listViewer.refresh();
+					comboViewer.refresh();
+					}
+			});
+			{
+				FormData fd_btnResetAllData = new FormData();
+				fd_btnResetAllData.top = new FormAttachment(composite, 6);
+				fd_btnResetAllData.right = new FormAttachment(100, -63);
+				btnResetAllData.setLayoutData(fd_btnResetAllData);
+			}
+			btnResetAllData.setText("Reset selections");
 		}
 
 		
