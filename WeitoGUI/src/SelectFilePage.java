@@ -77,7 +77,7 @@ public class SelectFilePage extends WizardPage {
 				composite_1.setLayoutData(fd_composite_1);
 			}
 			{
-				comboViewer = new ComboViewer(composite_1, SWT.NONE);
+				comboViewer = new ComboViewer(composite_1, SWT.READ_ONLY);
 				Combo combo = comboViewer.getCombo();
 				combo.setBounds(167, 2, 330, 23);
 			}
