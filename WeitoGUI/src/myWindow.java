@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import weito.Backend;
+import weito.Keyword;
 import weito.RunPapersParameter;
 import debug.Debug;
 import debug.Debug.DebugMode;
@@ -94,7 +95,10 @@ public class myWindow extends ApplicationWindow {
 					
 					if( Debug.getMode().contains(DebugMode.DROOLSSTAGEENTER) ) drlLocs.add( f.forDRLfile("debug.drl") );
 					
-					ArrayList<String> keywords = new ArrayList<String>(Arrays.asList( new String[]{"agile","extreme programming","xp","scrum",
+					ArrayList<Keyword> keywords = new ArrayList<Keyword>();
+					
+					@SuppressWarnings("unused")
+					ArrayList<String> oldkeywords = new ArrayList<String>(Arrays.asList( new String[]{"agile","extreme programming","xp","scrum",
 							"dsdm","fdd","software","feature","driven","development","lean","empirical","study","result"} ));
 					
 					try {
