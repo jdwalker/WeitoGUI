@@ -264,6 +264,17 @@ public class SelectFilePage extends WizardPage {
 				}
 				{
 					Button btnRemoveSelectedKeywords = new Button(composite_3, SWT.NONE);
+					btnRemoveSelectedKeywords.addSelectionListener(new SelectionAdapter() {
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							java.util.List<Keyword> items = new ArrayList<Keyword>();
+							for(int i : tableViewer.getTable().getSelectionIndices()) {
+								items.add(RunPapersParameter.getInstance().getKeywords().get(i));
+							}
+							RunPapersParameter.getInstance().getKeywords().removeAll(items);
+							tableViewer.refresh();
+						}
+					});
 					btnRemoveSelectedKeywords.setBounds(129, 0, 156, 25);
 					btnRemoveSelectedKeywords.setText("Remove Selected Keywords");
 				}
