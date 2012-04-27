@@ -18,4 +18,9 @@ public class DRLStyle {
 	public void setFile(String file) {
 		this.file = file;
 	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return name;
+	}
 }
