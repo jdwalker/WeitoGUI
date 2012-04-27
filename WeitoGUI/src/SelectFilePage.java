@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import weito.Keyword;
 import weito.RunPapersParameter;
 
 
@@ -251,6 +252,13 @@ public class SelectFilePage extends WizardPage {
 				}
 				{
 					Button btnAddNewKeyword = new Button(composite_3, SWT.NONE);
+					btnAddNewKeyword.addSelectionListener(new SelectionAdapter() {
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							RunPapersParameter.getInstance().getKeywords().add(new Keyword("New Keyword"));
+							tableViewer.refresh();
+						}
+					});
 					btnAddNewKeyword.setBounds(0, 0, 123, 25);
 					btnAddNewKeyword.setText("Add New &Keyword");
 				}
