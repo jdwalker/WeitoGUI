@@ -1,3 +1,7 @@
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.TableViewer;
@@ -9,6 +13,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
@@ -17,10 +22,13 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 
 public class EditDRL extends Dialog {
+	protected static final String[] DRL_FILTER_NAMES = null;
+	protected static final String[] DRL_FILTER_EXT = null;
 	private Table StyleTable;
 	private Label lblFileLocation;
 	private Label AlgorithmLocationLabel;
 	private Label excelFileLabel;
+	private List<DRLStyle> tableStyles = new ArrayList<DRLStyle>();
 
 	/**
 	 * Create the dialog.
@@ -42,6 +50,7 @@ public class EditDRL extends Dialog {
 		Composite container = (Composite) super.createDialogArea(parent);
 		container.setLayout(null);
 		{
+			tableStyles.addAll(StylesData.getInstance().getStyles());
 			TableViewer tableViewer = new TableViewer(container, SWT.BORDER | SWT.FULL_SELECTION | SWT.V_SCROLL);
 			StyleTable = tableViewer.getTable();
 			StyleTable.setBounds(10, 58, 544, 238);
@@ -82,19 +91,26 @@ public class EditDRL extends Dialog {
 			lblFileLocation.setText(StylesData.getInstance().getMasterStyle());
 		}
 		{
-			Button btnNewButton = new Button(container, SWT.NONE);
-			btnNewButton.addSelectionListener(new SelectionAdapter() {
+			Button btnBrowseMasterStyle = new Button(container, SWT.NONE);
+			btnBrowseMasterStyle.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					FileDialog openFilesDlg = new FileDialog(getShell(), SWT.SINGLE);
+					openFilesDlg.setFilterNames(DRL_FILTER_NAMES);
+					openFilesDlg.setFilterExtensions(DRL_FILTER_EXT);
+					String fn = openFilesDlg.open();
+			        if (fn != null) {
+			          lblFileLocation.setText(openFilesDlg.getFileName() + openFilesDlg.getFilterPath() );			          
+			        }
 				}
 			});
-			btnNewButton.setBounds(479, 21, 75, 15);
-			btnNewButton.setText("Browse");
+			btnBrowseMasterStyle.setBounds(479, 21, 75, 15);
+			btnBrowseMasterStyle.setText("Browse");
 		}
 		{
-			Button button = new Button(container, SWT.NONE);
-			button.setText("Browse");
-			button.setBounds(479, 354, 75, 15);
+			Button BrowseSelection = new Button(container, SWT.NONE);
+			BrowseSelection.setText("Browse");
+			BrowseSelection.setBounds(479, 354, 75, 15);
 		}
 		{
 			AlgorithmLocationLabel = new Label(container, SWT.BORDER);
@@ -119,9 +135,9 @@ public class EditDRL extends Dialog {
 			excelFileLabel.setText(StylesData.getInstance().getExcelSelection());
 		}
 		{
-			Button button = new Button(container, SWT.NONE);
-			button.setText("Browse");
-			button.setBounds(479, 402, 75, 15);
+			Button browseExcel = new Button(container, SWT.NONE);
+			browseExcel.setText("Browse");
+			browseExcel.setBounds(479, 402, 75, 15);
 		}
 
 		return container;
