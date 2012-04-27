@@ -1,38 +1,46 @@
+import java.io.File;
+
+import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
-import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.jface.layout.TableColumnLayout;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.ColumnPixelData;
-import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.TextCellEditor;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.swt.graphics.Image;
+
+import weito.RunPapersParameter;
 
 
 public class SelectFilePage extends WizardPage {
+	private static final String[] FILTER_NAMES = {"Portable Document Format (*.pdf)"};
+	private static final String[] FILTER_EXT = {"*.pdf"};
+
 	private Composite composite_1;
 	private FormData fd_composite_1;
 	private Composite composite_2;
 	private FormData fd_composite_2;
 	private Label lblSelectKeywords;
-	private Table table;
 	private Composite composite_4;
 	private FormData fd_composite_4;
+	private TableViewer tableViewer;
+	private ListViewer listViewer;
 
 	/**
 	 * Create the wizard.
@@ -90,6 +98,33 @@ public class SelectFilePage extends WizardPage {
 			}
 			{
 				Button btnselectFiles = new Button(composite_2, SWT.NONE);
+				btnselectFiles.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						FileDialog openFilesDlg = new FileDialog(getShell(), SWT.MULTI);
+						openFilesDlg.setFilterNames(FILTER_NAMES);
+						openFilesDlg.setFilterExtensions(FILTER_EXT);
+						String fn = openFilesDlg.open();
+				        if (fn != null) {
+				          // Append all the selected files. Since getFileNames() returns only 
+				          // the names, and not the path, prepend the path, normalizing
+				          // if necessary
+				          StringBuffer buf = new StringBuffer();
+				          String[] files = openFilesDlg.getFileNames();
+				          for (int i = 0, n = files.length; i < n; i++) {
+				            buf.append(openFilesDlg.getFilterPath());
+				            if (buf.charAt(buf.length() - 1) != File.separatorChar) {
+				              buf.append(File.separatorChar);
+				            }
+				            buf.append(files[i]);
+				            RunPapersParameter.getInstance().getInputPaperFileLocs().add(buf.toString());
+				            buf = new StringBuffer();
+				          }
+				          
+				        }
+						listViewer.refresh();
+					}
+				});
 				btnselectFiles.setText("&Add File(s)");
 				btnselectFiles.setBounds(503, 6, 143, 25);
 			}
@@ -104,9 +139,11 @@ public class SelectFilePage extends WizardPage {
 				btnSelectDirectory.setText("Add &Directory");
 			}
 			{
-				ListViewer listViewer = new ListViewer(composite_2, SWT.BORDER | SWT.V_SCROLL);
+				listViewer = new ListViewer(composite_2, SWT.BORDER | SWT.V_SCROLL);
 				List list = listViewer.getList();
 				list.setBounds(166, 0, 331, 89);
+				listViewer.setContentProvider(ArrayContentProvider.getInstance());
+				listViewer.setInput(RunPapersParameter.getInstance().getInputPaperFileLocs());
 			}
 		}
 		{
@@ -149,9 +186,9 @@ public class SelectFilePage extends WizardPage {
 					composite_4.setLayoutData(fd_composite_4);
 				}
 				{
-					TableViewer tableViewer = new TableViewer(composite_4, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
+					tableViewer = new TableViewer(composite_4, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
 					tableViewer.setColumnProperties(new String[] {});
-					table = tableViewer.getTable();
+					Table table = tableViewer.getTable();
 					table.setLinesVisible(true);
 					{
 						TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
