@@ -3,8 +3,12 @@ import java.util.List;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.DialogCellEditor;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -18,9 +22,88 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.CellEditor;
 
 
 public class EditDRL extends Dialog {
+	private class DRLFile extends EditingSupport {
+		private TableViewer viewer;
+
+		private DRLFile(TableViewer viewer) {
+			super(viewer);
+			this.viewer = viewer;
+		}
+
+		protected boolean canEdit(Object element) {
+			// TODO Auto-generated method stub
+			return true;
+		}
+
+		protected CellEditor getCellEditor(Object element) {
+			// TODO Auto-generated method stub
+			return new DialogCellEditor() {
+				
+				@Override
+				protected Object openDialogBox(Control arg0) {
+					FileDialog openFilesDlg = new FileDialog(getShell(), SWT.SINGLE);
+					openFilesDlg.setFilterNames(DRL_FILTER_NAMES);
+					openFilesDlg.setFilterExtensions(DRL_FILTER_EXT);
+					String fn = openFilesDlg.open();
+			        if (fn != null) {
+			          return fn;			          
+			        } else {
+			        	return null;
+			        }
+				}
+			};
+		}
+
+		protected Object getValue(Object element) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		protected void setValue(Object element, Object value) {
+			// TODO Auto-generated method stub
+		}
+	}
+
+
+
+	private class DRLStyleName extends EditingSupport {
+		private ColumnViewer viewer;
+
+		private DRLStyleName(ColumnViewer viewer) {
+			super(viewer);
+			this.viewer = viewer;
+		}
+
+		protected boolean canEdit(Object element) {
+			// TODO Auto-generated method stub
+			return true;
+		}
+
+		protected CellEditor getCellEditor(Object element) {
+			// TODO Auto-generated method stub
+			return new TextCellEditor(StyleTable);
+		}
+
+		protected Object getValue(Object element) {
+			// TODO Auto-generated method stub
+			return ((DRLStyle) element).getName();
+		}
+
+		protected void setValue(Object element, Object value) {
+			((DRLStyle) element).setName( (String) value);
+			viewer.refresh();
+		}
+	}
+
+
+
 	protected static final String[] DRL_FILTER_NAMES = {"DRL files (*.drl)"};
 	protected static final String[] DRL_FILTER_EXT = {"*.drl"};
 	protected static final String[] EXCEL_FILTER_NAMES = {"Excel Template File (*.xls)"};
@@ -59,16 +142,40 @@ public class EditDRL extends Dialog {
 			StyleTable.setBounds(10, 58, 544, 238);
 			StyleTable.setLinesVisible(true);
 			StyleTable.setHeaderVisible(true);
+			tableViewer.setContentProvider(ArrayContentProvider.getInstance());
+			tableViewer.setInput(tableStyles);
 			{
 				TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
-				TableColumn tableColumn = tableViewerColumn.getColumn();
-				tableColumn.setWidth(103);
-				tableColumn.setText("Style Name");
+				tableViewerColumn.setEditingSupport(new DRLStyleName(tableViewer));
+				tableViewerColumn.setLabelProvider(new ColumnLabelProvider() {
+					public Image getImage(Object element) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					public String getText(Object element) {
+						// TODO Auto-generated method stub
+						return ((DRLStyle) element).getName();
+					}
+				});
+				TableColumn tblclmnStyleName = tableViewerColumn.getColumn();
+				tblclmnStyleName.setWidth(114);
+				tblclmnStyleName.setText("Style Name");
 			}
 			{
 				TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+				tableViewerColumn.setEditingSupport(new DRLFile(tableViewer));
+				tableViewerColumn.setLabelProvider(new ColumnLabelProvider() {
+					public Image getImage(Object element) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					public String getText(Object element) {
+						// TODO Auto-generated method stub
+						return ((DRLStyle) element).getFile();
+					}
+				});
 				TableColumn tblclmnDrlFileLocation = tableViewerColumn.getColumn();
-				tblclmnDrlFileLocation.setWidth(435);
+				tblclmnDrlFileLocation.setWidth(413);
 				tblclmnDrlFileLocation.setText("DRL file location");
 			}
 		}
