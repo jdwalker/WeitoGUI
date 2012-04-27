@@ -159,6 +159,8 @@ public class EditDRL extends Dialog {
 	protected void okPressed() {
 		StylesData.getInstance().setMasterStyle(lblFileLocation.getText());
 		StylesData.getInstance().setMasterSelection(AlgorithmLocationLabel.getText());
+		if(AlgorithmLocationLabel.getText().endsWith(".drt")) {
 		StylesData.getInstance().setExcelSelection(excelFileLabel.getText());
+		}
 	}
 }
