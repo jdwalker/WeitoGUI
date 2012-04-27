@@ -53,7 +53,7 @@ public class EditDRL extends Dialog {
 					openFilesDlg.setFilterExtensions(DRL_FILTER_EXT);
 					String fn = openFilesDlg.open();
 			        if (fn != null) {
-			          return fn;			          
+			          return (openFilesDlg.getFilterPath() + openFilesDlg.getFileName());			          
 			        } else {
 			        	return null;
 			        }
@@ -63,11 +63,14 @@ public class EditDRL extends Dialog {
 
 		protected Object getValue(Object element) {
 			// TODO Auto-generated method stub
-			return null;
+			return ((DRLStyle) element).getFile();
 		}
 
 		protected void setValue(Object element, Object value) {
-			// TODO Auto-generated method stub
+			if(value != null) {
+				((DRLStyle) element).setFile((String) value);
+			}
+			viewer.refresh();
 		}
 	}
 
