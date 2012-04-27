@@ -1,4 +1,3 @@
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +21,12 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 
 public class EditDRL extends Dialog {
-	protected static final String[] DRL_FILTER_NAMES = null;
-	protected static final String[] DRL_FILTER_EXT = null;
+	protected static final String[] DRL_FILTER_NAMES = {"DRL files (*.drl)"};
+	protected static final String[] DRL_FILTER_EXT = {"*.drl"};
+	protected static final String[] EXCEL_FILTER_NAMES = {"Excel Template File (*.xls)"};
+	protected static final String[] EXCEL_FILTER_EXT = {"*.xls"};
+	protected static final String[] DRT_FILTER_EXT = {"Rule files (*.drl)","Rule Template files (*.drt)"};
+	protected static final String[] DRT_FILTER_NAMES = {".drl",".drt"};
 	private Table StyleTable;
 	private Label lblFileLocation;
 	private Label AlgorithmLocationLabel;
@@ -109,6 +112,18 @@ public class EditDRL extends Dialog {
 		}
 		{
 			Button BrowseSelection = new Button(container, SWT.NONE);
+			BrowseSelection.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					FileDialog openFilesDlg = new FileDialog(getShell(), SWT.SINGLE);
+					openFilesDlg.setFilterNames(DRT_FILTER_NAMES);
+					openFilesDlg.setFilterExtensions(DRT_FILTER_EXT);
+					String fn = openFilesDlg.open();
+			        if (fn != null) {
+			          AlgorithmLocationLabel.setText(openFilesDlg.getFileName() + openFilesDlg.getFilterPath() );			          
+			        }
+				}
+			});
 			BrowseSelection.setText("Browse");
 			BrowseSelection.setBounds(479, 354, 75, 15);
 		}
@@ -136,6 +151,18 @@ public class EditDRL extends Dialog {
 		}
 		{
 			Button browseExcel = new Button(container, SWT.NONE);
+			browseExcel.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					FileDialog openFilesDlg = new FileDialog(getShell(), SWT.SINGLE);
+					openFilesDlg.setFilterNames(EXCEL_FILTER_NAMES);
+					openFilesDlg.setFilterExtensions(EXCEL_FILTER_EXT);
+					String fn = openFilesDlg.open();
+			        if (fn != null) {
+			          excelFileLabel.setText(openFilesDlg.getFileName() + openFilesDlg.getFilterPath() );			          
+			        }
+				}
+			});
 			browseExcel.setText("Browse");
 			browseExcel.setBounds(479, 402, 75, 15);
 		}
