@@ -1,21 +1,19 @@
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 
 public class EditDRL extends Dialog {
@@ -32,6 +30,8 @@ public class EditDRL extends Dialog {
 		super(parentShell);
 		setShellStyle(SWT.TITLE);
 	}
+	
+	
 
 	/**
 	 * Create contents of the dialog.
@@ -79,6 +79,7 @@ public class EditDRL extends Dialog {
 			lblFileLocation = new Label(container, SWT.BORDER);
 			lblFileLocation.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
 			lblFileLocation.setBounds(133, 21, 332, 15);
+			lblFileLocation.setText(StylesData.getInstance().getMasterStyle());
 		}
 		{
 			Button btnNewButton = new Button(container, SWT.NONE);
@@ -99,6 +100,7 @@ public class EditDRL extends Dialog {
 			AlgorithmLocationLabel = new Label(container, SWT.BORDER);
 			AlgorithmLocationLabel.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
 			AlgorithmLocationLabel.setBounds(133, 354, 332, 15);
+			AlgorithmLocationLabel.setText(StylesData.getInstance().getMasterSelection());
 		}
 		{
 			Label lblMasterSelectionAlgorithm = new Label(container, SWT.WRAP);
@@ -114,6 +116,7 @@ public class EditDRL extends Dialog {
 			excelFileLabel = new Label(container, SWT.BORDER);
 			excelFileLabel.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
 			excelFileLabel.setBounds(133, 402, 332, 15);
+			excelFileLabel.setText(StylesData.getInstance().getExcelSelection());
 		}
 		{
 			Button button = new Button(container, SWT.NONE);
@@ -148,5 +151,14 @@ public class EditDRL extends Dialog {
 	protected void configureShell(Shell newShell) {
 		newShell.setText("DRL Files and Styles");
 		super.configureShell(newShell);
+	}
+
+
+
+	@Override
+	protected void okPressed() {
+		StylesData.getInstance().setMasterStyle(lblFileLocation.getText());
+		StylesData.getInstance().setMasterSelection(AlgorithmLocationLabel.getText());
+		StylesData.getInstance().setExcelSelection(excelFileLabel.getText());
 	}
 }
