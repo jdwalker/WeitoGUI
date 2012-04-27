@@ -100,6 +100,8 @@ public class SelectFilePage extends WizardPage {
 					public void widgetSelected(SelectionEvent e) {
 						EditDRL dialog = new EditDRL(getShell());
 						dialog.open();
+						comboViewer.setInput(StylesData.getInstance().getStyles());
+						comboViewer.refresh();
 					}
 				});
 				button.setText("&Edit Styles");
