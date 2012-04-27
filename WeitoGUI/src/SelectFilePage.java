@@ -29,9 +29,18 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import weito.Keyword;
 import weito.RunPapersParameter;
+import org.eclipse.jface.viewers.LabelProvider;
 
 
 public class SelectFilePage extends WizardPage {
+	private static class ViewerLabelProvider extends LabelProvider {
+		public Image getImage(Object element) {
+			return null;
+		}
+		public String getText(Object element) {
+			return ((DRLStyle) element).getName();
+		}
+	}
 
 	private static final String[] FILTER_NAMES = {"Portable Document Format (*.pdf)"};
 	private static final String[] FILTER_EXT = {"*.pdf"};
@@ -80,9 +89,19 @@ public class SelectFilePage extends WizardPage {
 				comboViewer = new ComboViewer(composite_1, SWT.READ_ONLY);
 				Combo combo = comboViewer.getCombo();
 				combo.setBounds(167, 2, 330, 23);
+				comboViewer.setLabelProvider(new ViewerLabelProvider());
+				comboViewer.setContentProvider(ArrayContentProvider.getInstance());
+				comboViewer.setInput(StylesData.getInstance().getStyles());
 			}
 			{
 				Button button = new Button(composite_1, SWT.NONE);
+				button.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						EditDRL dialog = new EditDRL(getShell());
+						dialog.open();
+					}
+				});
 				button.setText("&Edit Styles");
 				button.setBounds(503, 0, 143, 25);
 			}
