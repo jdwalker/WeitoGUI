@@ -118,6 +118,7 @@ public class EditDRL extends Dialog {
 	private Label AlgorithmLocationLabel;
 	private Label excelFileLabel;
 	private List<DRLStyle> tableStyles = new ArrayList<DRLStyle>();
+	private TableViewer tableViewer;
 
 	/**
 	 * Create the dialog.
@@ -140,7 +141,7 @@ public class EditDRL extends Dialog {
 		container.setLayout(null);
 		{
 			tableStyles.addAll(StylesData.getInstance().getStyles());
-			TableViewer tableViewer = new TableViewer(container, SWT.BORDER | SWT.FULL_SELECTION | SWT.V_SCROLL);
+			tableViewer = new TableViewer(container, SWT.BORDER | SWT.FULL_SELECTION | SWT.V_SCROLL);
 			StyleTable = tableViewer.getTable();
 			StyleTable.setBounds(10, 58, 544, 238);
 			StyleTable.setLinesVisible(true);
@@ -184,11 +185,29 @@ public class EditDRL extends Dialog {
 		}
 		{
 			Button button = new Button(container, SWT.NONE);
+			button.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					tableStyles.add(new DRLStyle("New Style"));
+					tableViewer.refresh();
+				}
+			});
 			button.setBounds(10, 302, 62, 25);
 			button.setText("&Add Style");
 		}
 		{
 			Button button = new Button(container, SWT.NONE);
+			button.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					java.util.List<DRLStyle> items = new ArrayList<DRLStyle>();
+					for(int i : tableViewer.getTable().getSelectionIndices()) {
+						items.add(tableStyles.get(i));
+					}
+					tableStyles.removeAll(items);
+					tableViewer.refresh();
+				}
+			});
 			button.setText("&Remove Style");
 			button.setBounds(78, 302, 83, 25);
 		}
