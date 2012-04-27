@@ -31,6 +31,7 @@ import weito.RunPapersParameter;
 
 
 public class SelectFilePage extends WizardPage {
+
 	private static final String[] FILTER_NAMES = {"Portable Document Format (*.pdf)"};
 	private static final String[] FILTER_EXT = {"*.pdf"};
 
@@ -229,7 +230,10 @@ public class SelectFilePage extends WizardPage {
 						TableColumn tblclmnKeywords = tableViewerColumn.getColumn();
 						tcl_composite_4.setColumnData(tblclmnKeywords, new ColumnWeightData(1, ColumnWeightData.MINIMUM_WIDTH, false));
 						tblclmnKeywords.setText("Keywords");
+						tableViewerColumn.setEditingSupport(new KeywordEditingSupport(tableViewer));
 					}
+					tableViewer.setContentProvider(ArrayContentProvider.getInstance());
+					tableViewer.setInput(RunPapersParameter.getInstance().getKeywords());
 				}
 			}
 			{

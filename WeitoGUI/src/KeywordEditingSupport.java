@@ -34,6 +34,7 @@ public class KeywordEditingSupport extends EditingSupport {
 	@Override
 	protected void setValue(Object element, Object value) {
 		((Keyword) element).setKeyword( (String) value );
+		viewer.refresh();
 	}
 
 }
