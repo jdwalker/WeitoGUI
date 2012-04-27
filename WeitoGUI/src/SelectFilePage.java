@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -19,6 +20,7 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
@@ -129,17 +131,28 @@ public class SelectFilePage extends WizardPage {
 				btnselectFiles.setBounds(503, 6, 143, 25);
 			}
 			{
-				Label label = new Label(composite_2, SWT.NONE);
-				label.setText("Select files or directory of files:");
-				label.setBounds(0, 5, 160, 15);
+				Label lblFilesOrDirectory = new Label(composite_2, SWT.NONE);
+				lblFilesOrDirectory.setText("Files or directory of files:");
+				lblFilesOrDirectory.setBounds(0, 5, 160, 15);
 			}
 			{
 				Button btnSelectDirectory = new Button(composite_2, SWT.NONE);
+				btnSelectDirectory.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						DirectoryDialog dlg = new DirectoryDialog(getShell());
+						String dir = dlg.open();
+						if(dir != null) {
+							RunPapersParameter.getInstance().getInputPaperFileLocs().add(dir);
+						}
+						listViewer.refresh();
+					}
+				});
 				btnSelectDirectory.setBounds(504, 33, 142, 25);
 				btnSelectDirectory.setText("Add &Directory");
 			}
 			{
-				listViewer = new ListViewer(composite_2, SWT.BORDER | SWT.V_SCROLL);
+				listViewer = new ListViewer(composite_2, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
 				List list = listViewer.getList();
 				list.setBounds(166, 0, 331, 89);
 				listViewer.setContentProvider(ArrayContentProvider.getInstance());
@@ -156,6 +169,17 @@ public class SelectFilePage extends WizardPage {
 				fd_composite.left = new FormAttachment(0);
 				{
 					Button btnDeleteSelections = new Button(composite_2, SWT.NONE);
+					btnDeleteSelections.addSelectionListener(new SelectionAdapter() {
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							java.util.List<String> items = new ArrayList<String>();
+							for(int i : listViewer.getList().getSelectionIndices()) {
+								items.add(RunPapersParameter.getInstance().getInputPaperFileLocs().get(i));
+							}
+							RunPapersParameter.getInstance().getInputPaperFileLocs().removeAll(items);
+							listViewer.refresh();
+						}
+					});
 					btnDeleteSelections.setBounds(503, 64, 143, 25);
 					btnDeleteSelections.setText("Delete Selections");
 				}
@@ -222,7 +246,7 @@ public class SelectFilePage extends WizardPage {
 				{
 					Button btnAddNewKeyword = new Button(composite_3, SWT.NONE);
 					btnAddNewKeyword.setBounds(0, 0, 123, 25);
-					btnAddNewKeyword.setText("Add New Keyword");
+					btnAddNewKeyword.setText("Add New &Keyword");
 				}
 				{
 					Button btnRemoveSelectedKeywords = new Button(composite_3, SWT.NONE);
