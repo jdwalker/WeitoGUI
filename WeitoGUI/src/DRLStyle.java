@@ -1,5 +1,7 @@
+import java.io.Serializable;
 
-public class DRLStyle {
+
+public class DRLStyle implements Serializable {
 	String name = "";
 	String file = "";
 	

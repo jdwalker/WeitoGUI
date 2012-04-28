@@ -1,5 +1,6 @@
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInput;
@@ -64,13 +65,15 @@ public class StylesData implements Serializable {
 			}
 		} catch (Exception e) {
 			instance = new StylesData();
-			e.printStackTrace();
 		}
 	}
 	
 	public static void saveClassToFile() {
 		try {
-			ObjectOutput output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("styledata.ser")));
+			File file = new File("styledata.ser");
+			boolean makeNewFile = !file.exists();
+			
+			ObjectOutput output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file,makeNewFile)));
 			try {
 				output.writeObject(instance);
 			} finally {
