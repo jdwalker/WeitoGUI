@@ -110,9 +110,9 @@ public class EditDRL extends Dialog {
 
 	protected static final String[] DRL_FILTER_NAMES = {"DRL files (*.drl)"};
 	protected static final String[] DRL_FILTER_EXT = {"*.drl"};
-	protected static final String[] EXCEL_FILTER_NAMES = {"Excel Template File (*.xls)"};
+	protected static final String[] EXCEL_FILTER_NAMES = {"Excel Spreadsheet File (*.xls)"};
 	protected static final String[] EXCEL_FILTER_EXT = {"*.xls"};
-	protected static final String[] DRT_FILTER_EXT = {".drl",".drt"};
+	protected static final String[] DRT_FILTER_EXT = {"*.drl","*.drt"};
 	protected static final String[] DRT_FILTER_NAMES = {"Rule files (*.drl)","Rule Template files (*.drt)"};
 	private Table StyleTable;
 	private Label lblFileLocation;
