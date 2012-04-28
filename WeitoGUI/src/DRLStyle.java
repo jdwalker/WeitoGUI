@@ -12,7 +12,7 @@ public class DRLStyle {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getFile() {
+	public String getFilePath() {
 		return file;
 	}
 	public void setFile(String file) {

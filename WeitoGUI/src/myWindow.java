@@ -117,6 +117,7 @@ public class myWindow extends ApplicationWindow {
 					NewRunWizard wizard = new NewRunWizard();
 					WizardDialog runDialog = new WizardDialog(getShell(), wizard);
 					runDialog.open();
+					
 				}
 			};
 			OpenWizard.setAccelerator(SWT.ALT | 'O');

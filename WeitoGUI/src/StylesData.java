@@ -12,7 +12,7 @@ public class StylesData {
 	protected StylesData() {
 	}
 
-	public String getMasterStyle() {
+	public String getMasterStyleFilePath() {
 		return masterStyle;
 	}
 	public void setMasterStyle(String masterStyle) {

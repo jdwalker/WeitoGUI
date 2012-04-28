@@ -89,6 +89,7 @@ public class SelectFilePage extends WizardPage {
 				comboViewer = new ComboViewer(composite_1, SWT.READ_ONLY);
 				Combo combo = comboViewer.getCombo();
 				combo.setBounds(167, 2, 330, 23);
+				combo.select(0);
 				comboViewer.setLabelProvider(new ViewerLabelProvider());
 				comboViewer.setContentProvider(ArrayContentProvider.getInstance());
 				comboViewer.setInput(StylesData.getInstance().getStyles());
@@ -322,5 +323,9 @@ public class SelectFilePage extends WizardPage {
 		}
 
 		
+	}
+
+	public ComboViewer getComboViewer() {
+		return comboViewer;
 	}
 }

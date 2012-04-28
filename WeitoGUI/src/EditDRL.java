@@ -64,7 +64,7 @@ public class EditDRL extends Dialog {
 
 		protected Object getValue(Object element) {
 			// TODO Auto-generated method stub
-			return ((DRLStyle) element).getFile();
+			return ((DRLStyle) element).getFilePath();
 		}
 
 		protected void setValue(Object element, Object value) {
@@ -176,7 +176,7 @@ public class EditDRL extends Dialog {
 					}
 					public String getText(Object element) {
 						// TODO Auto-generated method stub
-						return ((DRLStyle) element).getFile();
+						return ((DRLStyle) element).getFilePath();
 					}
 				});
 				TableColumn tblclmnDrlFileLocation = tableViewerColumn.getColumn();
@@ -221,7 +221,7 @@ public class EditDRL extends Dialog {
 			lblFileLocation = new Label(container, SWT.BORDER);
 			lblFileLocation.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
 			lblFileLocation.setBounds(133, 21, 332, 15);
-			lblFileLocation.setText(StylesData.getInstance().getMasterStyle());
+			lblFileLocation.setText(StylesData.getInstance().getMasterStyleFilePath());
 		}
 		{
 			Button btnBrowseMasterStyle = new Button(container, SWT.NONE);
