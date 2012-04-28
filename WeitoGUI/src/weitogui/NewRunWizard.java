@@ -43,7 +43,7 @@ public class NewRunWizard extends Wizard {
 			}
 			contents.add(factory.forDRLfile(masterStyleFilePath));
 			
-			int selectedStyleIndex = page.getComboViewer().getCCombo().getSelectionIndex();
+			int selectedStyleIndex = page.getComboViewer().getCombo().getSelectionIndex();
 			String selectedStyleFilePath = StylesData.getInstance().getStyles().get(selectedStyleIndex).getFilePath();
 			if(selectedStyleFilePath == "") {
 				throw new Exception("Selected Style File Path Empty!");

@@ -89,11 +89,12 @@ public class SelectFilePage extends WizardPage {
 			{
 				comboViewer = new ComboViewer(composite_1, SWT.READ_ONLY);
 				Combo combo = comboViewer.getCombo();
-				combo.setBounds(167, 2, 330, 23);
-				combo.select(0);
+				combo.setItems(new String[] {"Currently no items"});
 				comboViewer.setLabelProvider(new ViewerLabelProvider());
 				comboViewer.setContentProvider(ArrayContentProvider.getInstance());
 				comboViewer.setInput(StylesData.getInstance().getStyles());
+				combo.setBounds(167, 2, 330, 23);
+				combo.select(0);
 			}
 			{
 				Button button = new Button(composite_1, SWT.NONE);
@@ -102,7 +103,6 @@ public class SelectFilePage extends WizardPage {
 					public void widgetSelected(SelectionEvent e) {
 						EditDRL dialog = new EditDRL(getShell());
 						dialog.open();
-						comboViewer.setInput(StylesData.getInstance().getStyles());
 						comboViewer.refresh();
 					}
 				});
