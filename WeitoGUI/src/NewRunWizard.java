@@ -1,3 +1,5 @@
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,9 +63,12 @@ public class NewRunWizard extends Wizard {
 			RunPapersParameter.getInstance().getDrlLocs().addAll(contents);
 			Backend.runPapers(RunPapersParameter.getInstance());
 		} catch (Exception e) {
-			ErrorDialog.openError(getShell(), "Process Error", e.getLocalizedMessage(), new Status(IStatus.ERROR, "Error", 0,
-	            "Status Error Message", null));
-			e.printStackTrace();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PrintStream ps = new PrintStream(baos);
+			e.printStackTrace(ps);
+			
+			ErrorDialog.openError(getShell(), e.getLocalizedMessage(), e.getLocalizedMessage(), new Status(IStatus.ERROR, "Error", 0,
+	            baos.toString(), null));
 	}
 		return true;
 	}
