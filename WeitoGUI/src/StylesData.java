@@ -1,8 +1,22 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class StylesData {
+public class StylesData implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5665254358739912680L;
 	static StylesData instance = new StylesData();
 	String masterStyle = "";
 	List<DRLStyle> styles = new ArrayList<DRLStyle>();
@@ -39,5 +53,31 @@ public class StylesData {
 	public static StylesData getInstance() {
 		return instance;
 	}
-
+	
+	public static void loadClassFromFile() {
+		try {
+			ObjectInput input = new ObjectInputStream(new BufferedInputStream(new FileInputStream("styledata.ser")));
+			try {
+				instance = (StylesData) input.readObject();
+			} finally {
+				input.close();
+			}
+		} catch (Exception e) {
+			instance = new StylesData();
+			e.printStackTrace();
+		}
+	}
+	
+	public static void saveClassToFile() {
+		try {
+			ObjectOutput output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("styledata.ser")));
+			try {
+				output.writeObject(instance);
+			} finally {
+				output.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

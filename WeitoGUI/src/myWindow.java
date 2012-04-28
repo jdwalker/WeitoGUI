@@ -102,7 +102,7 @@ public class myWindow extends ApplicationWindow {
 							"dsdm","fdd","software","feature","driven","development","lean","empirical","study","result"} ));
 					
 					try {
-					Backend.runPapers(new RunPapersParameter(paperLocs, drlLocs, keywords));
+						Backend.runPapers(new RunPapersParameter(paperLocs, drlLocs, keywords));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -168,6 +168,7 @@ public class myWindow extends ApplicationWindow {
 	 */
 	public static void main(String args[]) {
 		try {
+			StylesData.loadClassFromFile();
 			myWindow window = new myWindow();
 			window.setBlockOnOpen(true);
 			window.open();

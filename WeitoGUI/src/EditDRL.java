@@ -336,6 +336,7 @@ public class EditDRL extends Dialog {
 		StylesData.getInstance().setExcelSelection(excelFileLabel.getText());
 		}
 		StylesData.getInstance().setStyles(tableStyles);
+		StylesData.saveClassToFile();
 		close();
 	}
 }
