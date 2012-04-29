@@ -37,9 +37,9 @@ public class NewRunWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		try {
-			
+			Debug.setMode(EnumSet.of(DebugMode.FEATURE));
 			if(page.getBtnDebug().getSelection()) {
-				Debug.setMode(EnumSet.of(DebugMode.FEATURESPEC));
+				Debug.setMode(EnumSet.of(DebugMode.FEATURE, DebugMode.FORMAT));
 			}
 			
 			AlgorithmContentsFactory factory = new AlgorithmContentsFactory();
