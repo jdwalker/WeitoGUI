@@ -23,5 +23,10 @@ public class TextViewerPrinter extends Printer {
 	public void print(String string) {
 		strToPrintTo.setText( strToPrintTo.getText() + string );
 	}
+
+	@Override
+	public void clear() {
+		strToPrintTo.setText("");
+	}
 	
 }

@@ -2,6 +2,7 @@ package weitogui;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
@@ -9,6 +10,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.wizard.Wizard;
 
+import debug.Debug;
+import debug.Debug.DebugMode;
+import debug.Printer;
 import drools.AlgorithmContents;
 import drools.AlgorithmContentsFactory;
 
@@ -33,9 +37,15 @@ public class NewRunWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		try {
+			
+			if(page.getBtnDebug().getSelection()) {
+				Debug.setMode(EnumSet.of(DebugMode.FEATURESPEC));
+			}
+			
 			AlgorithmContentsFactory factory = new AlgorithmContentsFactory();
 			List<AlgorithmContents> contents = new ArrayList<AlgorithmContents>();
 			contents.add( factory.forRFfile( "formatalgorithm.rf" ) );
+			contents.add( factory.forRFfile( "categoryalgorithm.rf" ) );
 			
 			String masterStyleFilePath = StylesData.getInstance().getMasterStyleFilePath();
 			if(masterStyleFilePath == "") {
@@ -59,15 +69,18 @@ public class NewRunWizard extends Wizard {
 			} else {
 				contents.add(factory.forDRLfile(selectionFilePath));
 			}
+			
+			if( Debug.getMode().contains(DebugMode.DROOLSSTAGEENTER) )  contents.add( factory.forDRLlocalfile("debug.drl") );
 	
 			RunPapersParameter.getInstance().getDrlLocs().clear();
 			RunPapersParameter.getInstance().getDrlLocs().addAll(contents);
+			Printer.getInstance().clear();
 			Backend.runPapers(RunPapersParameter.getInstance());
 		} catch (Exception e) {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			PrintStream ps = new PrintStream(baos);
 			e.printStackTrace(ps);
-			
+			e.printStackTrace();
 			ErrorDialog.openError(getShell(), e.getLocalizedMessage(), e.getLocalizedMessage(), new Status(IStatus.ERROR, "Error", 0,
 	            baos.toString(), null));
 	}

@@ -115,6 +115,7 @@ public class myWindow extends ApplicationWindow {
 		{
 			OpenWizard = new Action("Open Wizard") {
 				public void run() {
+					Printer.setInstance(new TextViewerPrinter(styledText));
 					NewRunWizard wizard = new NewRunWizard();
 					WizardDialog runDialog = new WizardDialog(getShell(), wizard);
 					runDialog.open();

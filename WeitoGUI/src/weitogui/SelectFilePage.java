@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import weito.FileAccess;
 import weito.Keyword;
 import weito.RunPapersParameter;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -57,6 +58,7 @@ public class SelectFilePage extends WizardPage {
 	private ListViewer listViewer;
 	private Composite composite;
 	private ComboViewer comboViewer;
+	private Button btnDebug;
 
 	/**
 	 * Create the wizard.
@@ -170,7 +172,8 @@ public class SelectFilePage extends WizardPage {
 						DirectoryDialog dlg = new DirectoryDialog(getShell());
 						String dir = dlg.open();
 						if(dir != null) {
-							RunPapersParameter.getInstance().getInputPaperFileLocs().add(dir);
+							FileAccess fa = new FileAccess("pdf", true);
+							RunPapersParameter.getInstance().getInputPaperFileLocs().addAll( fa.getFilesFromDir(dir));
 						}
 						listViewer.refresh();
 					}
@@ -322,11 +325,25 @@ public class SelectFilePage extends WizardPage {
 			}
 			btnResetAllData.setText("Reset selections");
 		}
+		{
+			btnDebug = new Button(container, SWT.CHECK);
+			{
+				FormData fd_btnDebug = new FormData();
+				fd_btnDebug.top = new FormAttachment(composite, 6);
+				fd_btnDebug.left = new FormAttachment(composite, 10, SWT.LEFT);
+				btnDebug.setLayoutData(fd_btnDebug);
+			}
+			btnDebug.setText("Debug ");
+		}
 
 		
 	}
 
 	public ComboViewer getComboViewer() {
 		return comboViewer;
+	}
+
+	public Button getBtnDebug() {
+		return btnDebug;
 	}
 }
